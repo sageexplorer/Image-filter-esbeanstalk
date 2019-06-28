@@ -40,16 +40,10 @@ import { reduce } from 'bluebird';
     if (url.match(/\.(jpeg|jpg|gif|png)$/) == null){
       res.send("Please input valid Image url")
     }
-    
     let image_path = await filterImageFromURL(url)
-    //await res.sendFile(image_path)
     let name= await path.basename(image_path) 
-    //let fullPath = path.normalize(__dirname + '/src/util/tmp/' + name, 'utf8')
-
     await res.status(200).sendFile(image_path)
-
     await deleteLocalFiles(['/src/util/tmp/' ])
-   
   } );
 
 
