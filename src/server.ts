@@ -38,12 +38,12 @@ import { reduce } from 'bluebird';
   app.get( "/filteredimage", async ( req, res ) => {
     let url = req.query.image_url;
     if (url.match(/\.(jpeg|jpg|gif|png)$/) == null){
-      res.send("Please input valid Image url")
+      res.status(415).send("Unsupported Media Type. Please input valid Image url")
     }
     let image_path = await filterImageFromURL(url)
-    let name= await path.basename(image_path) 
+    let image_name= await path.basename(image_path) 
     await res.status(200).sendFile(image_path)
-    await deleteLocalFiles(['/src/util/tmp/' ])
+    await deleteLocalFiles(['/src/util/tmp/' + image_name ])
   } );
 
 
